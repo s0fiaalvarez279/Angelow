@@ -63,6 +63,7 @@ $user = $user ?? null;
 
     <div class="icon-btn" id="favBtnHeader">
       <img src="<?= APP_URL ?>/assets/imagenes/general/favoritos.png" alt="Favoritos" style="width:24px;" onerror="this.src='https://via.placeholder.com/24?text=fav'">
+      <!-- Sofia #14: Contador visible de favoritos (ícono del header) -->
       <span id="favHeaderBadge" class="badge" style="display:none">0</span>
     </div>
 
@@ -73,6 +74,7 @@ $user = $user ?? null;
         <a href="<?= APP_URL ?>/seguimiento" class="dropdown-item" id="trackOrderLink">Rastrea tu pedido</a>
         <a href="#" class="dropdown-item" id="openFavoritesFromMenu">
           <span>Mis Favoritos</span>
+          <!-- Sofia #14: Contador en el menú de perfil -->
           <span id="favBadge" class="badge" style="position:static; margin-left:auto; display:none;">0</span>
         </a>
       </div>
@@ -80,10 +82,14 @@ $user = $user ?? null;
   </div>
 </header>
 
+<!-- Sofia #9: Contenedor de categorías para filtrado -->
 <div class="categories">
   <div class="categories-inner" id="categoriesList"></div>
 </div>
 
+<!-- Sofia #9: Grid de productos donde se muestran resultados (incluye manejo de cero resultados) -->
+<!-- Sofia #15: Visualización de productos - imagen, nombre, categoría, precio (información mínima obligatoria). Cada producto es un botón que abre un modal con detalles completos. -->
+ <!-- Sofia #13: Visualización de disponibilidad de producto (stock) en tarjetas y modales. -->
 <section>
   <div class="products-grid" id="productsGrid"></div>
 </section>
@@ -119,6 +125,7 @@ $user = $user ?? null;
   <div class="fav-sidebar">
     <div class="fav-header">
       <div>
+        <!-- dentro del sidebar de favoritos -->
         <h2>Mis Favoritos (<span id="favTotal">0</span>)</h2>
         <p>Envío gratis</p>
       </div>

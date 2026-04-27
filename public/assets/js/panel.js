@@ -635,7 +635,7 @@ window.deleteProduct = function(id, productName) {
     const index = products.findIndex(p => p.id === id);
     
     if (index !== -1) {
-      // Guardar el nombre para el mensaje
+      // Guardar el nombre para el mensaje-
       const deletedProductName = products[index].name;
       
       // Eliminar el producto del array
