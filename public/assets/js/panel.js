@@ -1679,7 +1679,7 @@ function setupDeliveryModal() {
   });
 }
 
-// Sofia #9: Configurar eventos del modal de categorías
+// Sofia #9 - Configurar eventos del modal de categorías
 function setupCategoryModal() {
   const modal = document.getElementById('categoryModal');
   const closeBtn = document.querySelector('.category-modal-close');

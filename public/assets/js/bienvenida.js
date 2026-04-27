@@ -291,7 +291,7 @@ function requireAuth(action, callback) {
   return callback();
 }
 
-// Sofia #9: Filtro por nombre y/o categoría/subcategoría con coincidencias parciales
+// Sofia #9 - Filtro por nombre y/o categoría/subcategoría con coincidencias parciales
 // Sofia #15: Filtrado unificado - consistencia en resultados por categoría y búsqueda
 function getFilteredProducts() {
   return products.filter(p => {
