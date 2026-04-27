@@ -1,4 +1,5 @@
 // DATOS DE PRODUCTOS Y CATEGORÍAS
+// Sofia #15: Datos completos y válidos - cada producto tiene imagen, nombre, categoría y precio 
 const products = [
   { 
     id: 1, 
@@ -119,6 +120,7 @@ let categories = JSON.parse(localStorage.getItem('angelow_client_categories')) |
 
 // Variables globales
 let cart = JSON.parse(localStorage.getItem("angelow_cart")) || [];
+// Sofia #14: Lista de favoritos del usuario (sincronizada por usuario)
 let favorites = JSON.parse(localStorage.getItem("angelow_favorites")) || [];
 let activeCategory = "Todos";
 let selectedSizes = {};
@@ -180,6 +182,13 @@ function loadUser() {
   if (window.phpUser && window.phpUser !== null) {
     currentUser = window.phpUser;
     saveUser();
+     // Sofia #14: Carga los favoritos específicos del usuario desde localStorage (sincronización por usuario)
+    const userFavs = localStorage.getItem(`angelow_favorites_${currentUser.id}`);
+    if (userFavs && !localStorage.getItem('angelow_favorites')) {
+      localStorage.setItem('angelow_favorites', userFavs);
+      favorites = JSON.parse(userFavs);
+      updateFavBadges();
+    }
   } else {
     const savedUser = localStorage.getItem("angelow_user");
     if (savedUser) {
@@ -251,6 +260,7 @@ function logout() {
   
   favorites = [];
   saveFavorites();
+  updateFavBadges();
   
   updateUserUI();
   updateFavBadges();
@@ -281,8 +291,11 @@ function requireAuth(action, callback) {
   return callback();
 }
 
+// Sofia #9: Filtro por nombre y/o categoría/subcategoría con coincidencias parciales
+// Sofia #15: Filtrado unificado - consistencia en resultados por categoría y búsqueda
 function getFilteredProducts() {
   return products.filter(p => {
+    // Sofia #9: Filtro por categoría activa (incluye "Popular","Edición especial","Oferta" como subcategorías)
     if (activeCategory !== "Todos") {
       if (["Popular","Edición especial","Oferta"].includes(activeCategory)) {
         return p.subcategory === activeCategory;
@@ -293,6 +306,7 @@ function getFilteredProducts() {
     return true;
   }).filter(p => {
     if (!searchQuery) return true;
+        // Sofia #9: Coincidencia parcial en nombre, categoría o subcategoría
     return p.name.toLowerCase().includes(searchQuery) || 
            p.category.toLowerCase().includes(searchQuery) || 
            p.subcategory.toLowerCase().includes(searchQuery);
@@ -306,10 +320,13 @@ function renderCategories() {
   document.getElementById("categoriesList").innerHTML = html;
 }
 
+// Sofia #15: Renderizado consistente - muestra imagen, nombre, categoría y precio en catálogo, búsqueda y filtros
+// Sofia #13: Cada producto tiene campo 'stock' que define disponibilidad
 function renderProducts() {
   const grid = document.getElementById("productsGrid");
   const filtered = getFilteredProducts();
   
+  // Sofia #9: Manejo de cero resultados - muestra mensaje claro al usuario
   if (filtered.length === 0) {
     grid.innerHTML = `
       <div class="no-results">
@@ -321,9 +338,11 @@ function renderProducts() {
   }
   
   grid.innerHTML = filtered.map(p => {
+// Sofia #13: Visualización clara del estado de stock
     let stockClass = p.stock > 10 ? 'stock-ok' : p.stock > 0 ? 'stock-low' : 'stock-out';
     let stockText = p.stock > 10 ? 'En stock' : p.stock > 0 ? `Solo ${p.stock} left` : 'Sin stock';
     
+ // Sofia #15: Información mínima obligatoria: imagen, nombre, categoría (subcategory/category) y precio
     return `
       <div class="card-container" onclick="openProductDetail(${p.id})">
         <div class="card">
@@ -411,7 +430,7 @@ function renderCart() {
 function addToCart(pid) {
   event.stopPropagation();
   let p = products.find(p => p.id === pid);
-  
+    // Sofia #13: Validación de stock antes de agregar al carrito
   if (p.stock <= 0) {
     showToast({ title: "Sin stock", message: "Producto no disponible", type: "error" });
     return;
@@ -469,7 +488,7 @@ function updateQty(cartId, delta) {
     removeFromCart(cartId);
     return;
   }
-  
+    // Sofia #13: Verifica stock disponible al incrementar cantidad
   if (newQty > p.stock) {
     showToast({ title: "Stock insuficiente", type: "warning" });
     return;
@@ -504,6 +523,7 @@ function proceedToCheckout() {
   }
 }
 
+// Sofia #14: Actualiza los contadores visibles en header, menú y panel de favoritos
 function updateFavBadges() {
   let count = favorites.length;
   document.getElementById('favBadge').textContent = count;
@@ -542,6 +562,7 @@ function toggleFavorite(id) {
     localStorage.setItem(`angelow_favorites_${currentUser.id}`, JSON.stringify(favorites));
   }
   
+  // Sofia #14: Actualización en tiempo real al agregar/eliminar favorito
   updateFavBadges();
   renderProducts();
   renderFavorites();
@@ -564,6 +585,7 @@ function renderFavorites() {
     return;
   }
   
+    // Sofia #13: También muestra disponibilidad en el panel de favoritos
   list.innerHTML = favProducts.map(p => `
     <div class="fav-item">
       <img src="${p.imgs[0]}" class="fav-item-img">
@@ -589,7 +611,6 @@ function renderFavorites() {
 
 function addFavoriteToCart(id) {
   let p = products.find(p => p.id === id);
-  
   if (p.stock <= 0) {
     showToast({ title: "Agotado", message: `${p.name} sin stock`, type: "error" });
     return;
@@ -763,7 +784,7 @@ function addToCartFromDetail(id) {
     showToast({ title: "Selecciona talla", message: "Elige una talla", type: "warning" });
     return;
   }
-  
+    // Sofia #13: Misma validación en detalle del producto
   if (p.stock <= 0) {
     showToast({ title: "Agotado", message: "Producto no disponible", type: "error" });
     return;
@@ -789,7 +810,7 @@ function addToCartFromDetail(id) {
   });
 }
 
-// EVENT LISTENERS
+// Sofia #9: Búsqueda dinámica - actualiza resultados en tiempo real mientras el usuario escribe
 document.getElementById('searchInput').addEventListener('input', e => {
   searchQuery = e.target.value.toLowerCase().trim();
   document.getElementById('clearSearch').style.display = searchQuery ? 'block' : 'none';

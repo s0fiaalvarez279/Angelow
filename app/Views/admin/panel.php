@@ -203,6 +203,7 @@ error_log(print_r($_SESSION, true));
             </section>
 
             <!--  SECCIÓN CATEGORÍAS  -->
+            <!-- Sofia #9: Panel de gestión de categorías (principales y subcategorías) -->
             <section id="categories-section" class="admin-section" style="display: none;">
                 <div class="categories-section">
                     <div class="categories-header">
@@ -506,7 +507,7 @@ error_log(print_r($_SESSION, true));
         </div>
     </div>
 
-    <!--  MODAL PARA CATEGORÍAS  -->
+    <!--  MODAL PARA CATEGORÍAS - Sofia #9 -->
     <div class="category-modal-overlay" id="categoryModal">
         <div class="category-modal-container">
             <div class="category-modal-header">

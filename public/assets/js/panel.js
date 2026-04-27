@@ -874,6 +874,7 @@ function saveProduct() {
   }, 100);
 }
 
+// Sofia #9: Renderizado de tabla de categorías principales
 function renderMainCategories() {
   const tbody = document.getElementById('mainCategoriesTableBody');
   if (!tbody) return;
@@ -919,6 +920,7 @@ function renderMainCategories() {
   `).join('');
 }
 
+// Sofia #9: Renderizado de tabla de subcategorías
 function renderSubCategories() {
   const tbody = document.getElementById('subcategoriesTableBody');
   if (!tbody) return;
@@ -965,6 +967,7 @@ function renderSubCategories() {
   `).join('');
 }
 
+// Sofia #9: Actualización de selects de categorías en formularios
 function updateCategorySelects() {
   const categorySelect = document.getElementById('productCategory');
   const subcategorySelect = document.getElementById('productSubcategory');
@@ -1001,6 +1004,7 @@ function updateCategorySelects() {
   }
 }
 
+// Sofia #9: Abrir modal para agregar/editar categoría o subcategoría
 function openCategoryModal(tipo, item = null) {
   const modal = document.getElementById('categoryModal');
   const modalTitle = document.getElementById('categoryModalTitle');
@@ -1065,6 +1069,7 @@ function openCategoryModal(tipo, item = null) {
   document.body.style.overflow = 'hidden';
 }
 
+// Sofia #9: Cerrar modal de categorías
 function closeCategoryModal() {
   const modal = document.getElementById('categoryModal');
   if (modal) {
@@ -1073,6 +1078,7 @@ function closeCategoryModal() {
   }
 }
 
+// Sofia #9: Guardar categoría o subcategoría (crear o editar)
 function saveCategory() {
   const id = parseInt(document.getElementById('categoryId').value);
   const nombre = document.getElementById('categoryName').value.trim();
@@ -1144,6 +1150,7 @@ function saveCategory() {
   closeCategoryModal();
 }
 
+// Sofia #9: Editar categoría principal
 window.editMainCategory = function(id) {
   const category = mainCategories.find(c => c.id === id);
   if (category) {
@@ -1151,6 +1158,7 @@ window.editMainCategory = function(id) {
   }
 };
 
+// Sofia #9: Editar subcategoría
 window.editSubCategory = function(id) {
   const subcategory = subCategories.find(s => s.id === id);
   if (subcategory) {
@@ -1158,6 +1166,7 @@ window.editSubCategory = function(id) {
   }
 };
 
+// Sofia #9: Eliminar categoría principal
 window.deleteMainCategory = function(id) {
   const category = mainCategories.find(c => c.id === id);
   if (!category) return;
@@ -1181,6 +1190,7 @@ window.deleteMainCategory = function(id) {
   }
 };
 
+// Sofia #9: Eliminar subcategoría
 window.deleteSubCategory = function(id) {
   const subcategory = subCategories.find(s => s.id === id);
   if (!subcategory) return;
@@ -1669,6 +1679,7 @@ function setupDeliveryModal() {
   });
 }
 
+// Sofia #9: Configurar eventos del modal de categorías
 function setupCategoryModal() {
   const modal = document.getElementById('categoryModal');
   const closeBtn = document.querySelector('.category-modal-close');
