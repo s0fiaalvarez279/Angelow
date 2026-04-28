@@ -39,6 +39,8 @@ $user = $user ?? null;
 
 <div class="toast-container" id="toastContainer"></div>
 
+
+  <!-- samuel creo el logo -->
 <header>
   <div class="logo">
     <img src="<?= APP_URL ?>/assets/imagenes/general/logos.png" alt="ANGELOW" class="logo-img">
