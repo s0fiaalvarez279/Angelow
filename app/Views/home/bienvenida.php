@@ -48,7 +48,7 @@ $user = $user ?? null;
     </div>
   </div>
 
-    <!-- Sofia #9: Barra de búsqueda dinámica -->
+  <!-- Sofia #9: Búsqueda dinámica y filtros -->
   <div class="search-container">
     <img src="https://img.icons8.com/ios-filled/50/search--v1.png" class="search-icon" alt="Buscar">
     <input type="text" id="searchInput" class="search-input" placeholder="Buscar productos...">
@@ -89,7 +89,8 @@ $user = $user ?? null;
 
 <!-- Sofia #9: Grid de productos donde se muestran resultados (incluye manejo de cero resultados) -->
 <!-- Sofia #15: Visualización de productos - imagen, nombre, categoría, precio (información mínima obligatoria). Cada producto es un botón que abre un modal con detalles completos. -->
- <!-- Sofia #13: Visualización de disponibilidad de producto (stock) en tarjetas y modales. -->
+<!-- Sofia #13: Visualización de disponibilidad de producto (stock) en tarjetas y modales. -->
+<!-- Sara #16: Agregar directamente al carrito desde catálogo - selección de talla en el modal, validación de stock y confirmación con toast / actualización del badge del carrito -->
 <section>
   <div class="products-grid" id="productsGrid"></div>
 </section>
@@ -108,6 +109,7 @@ $user = $user ?? null;
       </div>
       <button onclick="closeCart()" style="background:none;border:none;font-size:28px;cursor:pointer;">✕</button>
     </div>
+    <!-- Sara #18: Modificación de cantidades en el carrito con botones +/- que respetan stock mínimo y disponible -->
     <div class="cart-content" id="cartItems">
       <div style="text-align:center;padding:100px 20px;color:#888;">Tu carrito está vacío</div>
     </div>
@@ -151,21 +153,23 @@ $user = $user ?? null;
     <div class="footer-section">
       <h3>Ayuda</h3>
       <ul class="footer-links">
-        <li><a href="<?= APP_URL ?>/documentos/Pedidos_envios.html">Pedidos y Envíos</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion.html">Devoluciones y Cambios</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Preguntas.html">Preguntas Frecuentes</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Guia_Tallas.html">Guía de Tallas</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Terminos.html">Devoluciones</a></li>
-      </ul>
+    <li><a href="<?= APP_URL ?>/documentos/Pedidos_envios">Pedidos y Envíos</a></li>
+    <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion">Devoluciones y Cambios</a></li>
+    <li><a href="<?= APP_URL ?>/documentos/Preguntas">Preguntas Frecuentes</a></li>
+    <li><a href="<?= APP_URL ?>/documentos/Guia_Tallas">Guía de Tallas</a></li>
+    <li><a href="<?= APP_URL ?>/documentos/Terminos">Términos y Condiciones</a></li>
+       </ul>
     </div>
     <div class="footer-section">
-      <h3>Legal</h3>
-      <ul class="footer-links">
-        <li><a href="<?= APP_URL ?>/documentos/Politicas_Priv.php">Políticas de Privacidad</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Terminos.php">Términos y Condiciones</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Politicas_Env.php">Políticas de Envío</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion.php">Políticas de Devolución</a></li>
-      </ul>
+      <div class="footer-section">
+    <h3>Legal</h3>
+    <ul class="footer-links">
+        <li><a href="<?= APP_URL ?>/documentos/Politicas_Priv">Políticas de Privacidad</a></li>
+        <li><a href="<?= APP_URL ?>/documentos/Terminos">Términos y Condiciones</a></li>
+        <li><a href="<?= APP_URL ?>/documentos/Politicas_Env">Políticas de Envío</a></li>
+        <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion">Políticas de Devolución</a></li>
+    </ul>
+</div>
     </div>
     <div class="footer-section">
       <h3>Síguenos</h3>

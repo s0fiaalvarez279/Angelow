@@ -187,6 +187,8 @@ error_log(print_r($_SESSION, true));
                             </div>
                         </div>
                     </div>
+                    <!-- Sara #44: La edición de productos solo es accesible para administradores (verificación al inicio del archivo).
+                         Los botones de edición (action-edit) en cada tarjeta de producto abren el modal con los datos actuales.El formulario valida campos obligatorios antes de guardar. -->
                     <div class="products-grid" id="adminProductsGrid"></div>
                 </div>
             </section>
@@ -401,6 +403,9 @@ error_log(print_r($_SESSION, true));
     </div>
 
     <!--  MODAL PARA AGREGAR/EDITAR PRODUCTO  -->
+      <!-- Sara #43: Formulario emergente modal- para creación de productos. Solo visible para administradores.
+     Campos obligatorios: nombre, categoría, precio, stock, tallas.
+     No guarda si algún campo obligatorio está vacío o contiene datos inválidos. -->
     <div class="product-modal-overlay" id="productModal">
         <div class="product-modal-container">
             <div class="modal-progress-bar"></div>
@@ -435,6 +440,7 @@ error_log(print_r($_SESSION, true));
                     <div class="modal-section-title"><i class="fas fa-dollar-sign"></i> Precio y stock</div>
                     <div class="product-form-row">
                         <div class="product-form-group"><label class="required">Precio en COP *</label><input type="number" id="productPrice" placeholder="Ej: 899900"></div>
+                        <!-- Sara #45: Gestión de niveles de stock. Solo administradores pueden modificar el stock desde el panel. -->
                         <div class="product-form-group"><label class="required">Stock *</label><input type="number" id="productStock" placeholder="10" value="10"></div>
                     </div>
                 </div>
