@@ -89,7 +89,8 @@ $user = $user ?? null;
 
 <!-- Sofia #9: Grid de productos donde se muestran resultados (incluye manejo de cero resultados) -->
 <!-- Sofia #15: Visualización de productos - imagen, nombre, categoría, precio (información mínima obligatoria). Cada producto es un botón que abre un modal con detalles completos. -->
- <!-- Sofia #13: Visualización de disponibilidad de producto (stock) en tarjetas y modales. -->
+<!-- Sofia #13: Visualización de disponibilidad de producto (stock) en tarjetas y modales. -->
+<!-- Sara #16: Agregar directamente al carrito desde catálogo - selección de talla en el modal, validación de stock y confirmación con toast / actualización del badge del carrito -->
 <section>
   <div class="products-grid" id="productsGrid"></div>
 </section>
@@ -108,6 +109,7 @@ $user = $user ?? null;
       </div>
       <button onclick="closeCart()" style="background:none;border:none;font-size:28px;cursor:pointer;">✕</button>
     </div>
+    <!-- Sara #18: Modificación de cantidades en el carrito con botones +/- que respetan stock mínimo y disponible -->
     <div class="cart-content" id="cartItems">
       <div style="text-align:center;padding:100px 20px;color:#888;">Tu carrito está vacío</div>
     </div>

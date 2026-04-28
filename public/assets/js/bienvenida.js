@@ -119,6 +119,7 @@ const products = [
 let categories = JSON.parse(localStorage.getItem('angelow_client_categories')) || ["Todos","Bebés","Niños","Niñas","Popular","Edición especial","Oferta"];
 
 // Variables globales
+// Sara #17: Persistencia del carrito en localStorage (se mantiene durante la sesión y al iniciar sesión)
 let cart = JSON.parse(localStorage.getItem("angelow_cart")) || [];
 // Sofia #14: Lista de favoritos del usuario (sincronizada por usuario)
 let favorites = JSON.parse(localStorage.getItem("angelow_favorites")) || [];
@@ -343,6 +344,7 @@ function renderProducts() {
     let stockText = p.stock > 10 ? 'En stock' : p.stock > 0 ? `Solo ${p.stock} left` : 'Sin stock';
     
  // Sofia #15: Información mínima obligatoria: imagen, nombre, categoría (subcategory/category) y precio
+ // Sara #16: Acción directa desde el catálogo (sin entrar a detalle). Se selecciona talla en el mismo modal.
     return `
       <div class="card-container" onclick="openProductDetail(${p.id})">
         <div class="card">
@@ -416,6 +418,7 @@ function renderCart() {
         <h4>${item.name}</h4>
         <span>Talla: ${item.selectedSize} • ${item.subcategory}</span>
         <div class="qty">
+         <!-- Sara #18: Botones para aumentar/disminuir cantidad, con límite mínimo 1 y control de stock -->
           <button onclick="updateQty('${item.cartId}', -1)" ${item.quantity <= 1 ? 'disabled' : ''}>−</button>
           <strong>${item.quantity}</strong>
           <button onclick="updateQty('${item.cartId}', 1)">+</button>
@@ -427,10 +430,12 @@ function renderCart() {
   `).join("");
 }
 
+// Sara #17: Agregar producto al carrito desde el catálogo (con selección de talla en el modal)
 function addToCart(pid) {
   event.stopPropagation();
   let p = products.find(p => p.id === pid);
     // Sofia #13: Validación de stock antes de agregar al carrito
+    // Validación de stock (Sara #17)
   if (p.stock <= 0) {
     showToast({ title: "Sin stock", message: "Producto no disponible", type: "error" });
     return;
@@ -456,10 +461,12 @@ function addToCart(pid) {
     cart.push({ ...p, selectedSize: size, cartId, quantity: 1 });
   }
   
+  // Sara #45: Se reduce el stock al agregar al carrito para reflejar disponibilidad en tiempo real
   p.stock -= 1;
   saveCart();
   renderProducts();
   renderCart();
+    // Sara #16: Confirmación inmediata con toast y actualización del badge del carrito
   showToast({ title: "Agregado!", message: `${p.name} (Talla ${size})`, type: "success" });
 }
 
@@ -477,6 +484,7 @@ function removeFromCart(cartId) {
   showToast({ message: `${item.name} eliminado`, type: "info" });
 }
 
+// Sara #18: Aumentar/disminuir cantidad en el carrito con validación de stock y mínimo 1
 function updateQty(cartId, delta) {
   let item = cart.find(i => i.cartId === cartId);
   if (!item) return;
@@ -488,7 +496,9 @@ function updateQty(cartId, delta) {
     removeFromCart(cartId);
     return;
   }
+  
     // Sofia #13: Verifica stock disponible al incrementar cantidad
+      // Sara #45: Impide superar el stock disponible
   if (newQty > p.stock) {
     showToast({ title: "Stock insuficiente", type: "warning" });
     return;
@@ -611,6 +621,7 @@ function renderFavorites() {
 
 function addFavoriteToCart(id) {
   let p = products.find(p => p.id === id);
+    // Sofia #13: Validación de stock antes de agregar al carrito
   if (p.stock <= 0) {
     showToast({ title: "Agotado", message: `${p.name} sin stock`, type: "error" });
     return;
@@ -776,6 +787,7 @@ function buyNowProduct(id) {
   }
 }
 
+// Sara #17: Agregar producto al carrito desde la vista de detalle
 function addToCartFromDetail(id) {
   let p = products.find(p => p.id === id);
   let size = selectedSizes[id];

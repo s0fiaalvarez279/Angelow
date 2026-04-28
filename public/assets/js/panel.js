@@ -510,6 +510,10 @@ function getStatusClass(status) {
   return classMap[status] || 'status-pending';
 }
 
+// Sara #45: Gestión de niveles de stock desde la interfaz (solo administradores).
+// No se permiten cantidades negativas (el campo stock es number con min=0 en el modal).
+// Cuando el stock llega a cero, el producto se marca como agotado (clase 'stock-out') y se bloquea la compra.
+// En el panel, se muestra el estado del stock en la tarjeta del producto.
 function renderProducts() {
   const grid = document.getElementById("adminProductsGrid");
   if (!grid) return;
@@ -614,6 +618,8 @@ function selectSize(id, size) {
   renderProducts(); 
 }
 
+// Sara #44: Edición de productos existentes (solo usuarios con rol 'administrador').
+// Se carga la información actual del producto en el formulario (openProductModal) y se validan campos obligatorios antes de guardar.
 window.editProduct = function(id) {
   const product = products.find(p => p.id === id);
   if (product) {
@@ -674,6 +680,8 @@ window.deleteProduct = function(id, productName) {
   }
 };
 
+// Sara #43: Creación de nuevos productos mediante formulario en ventana emergente (solo administradores).
+// El botón "Agregar Producto" abre el modal con campos obligatorios: nombre, categoría, precio, stock, tallas.
 function openProductModal(product = null) {
   const modal = document.getElementById('productModal');
   const modalTitle = document.getElementById('modalTitle');
@@ -700,6 +708,7 @@ function openProductModal(product = null) {
     modalTitle.textContent = 'Editar Producto';
     saveBtn.textContent = 'Guardar Cambios';
     
+        // Sara #44: Carga los datos actuales del producto en el formulario
     document.getElementById('productName').value = product.name || '';
     document.getElementById('productCategory').value = product.category || '';
     document.getElementById('productSubcategory').value = product.subcategory || '';
@@ -719,6 +728,7 @@ function openProductModal(product = null) {
     
     editingProductId = product.id;
   } else {
+        // Sara #43: Modo creación - campos vacíos, botón "Agregar Producto"
     modalTitle.textContent = 'Agregar Nuevo Producto';
     saveBtn.textContent = 'Agregar Producto';
     editingProductId = null;
@@ -774,6 +784,7 @@ function saveProduct() {
   const category = document.getElementById('productCategory')?.value;
   const subcategory = document.getElementById('productSubcategory')?.value;
   const price = document.getElementById('productPrice')?.value.trim();
+  // Sara #45: El stock se actualiza desde el campo 'productStock' (number). Se previenen valores negativos mediante el atributo min="0" en el input.
   const stock = document.getElementById('productStock')?.value;
   const description = document.getElementById('productDescription')?.value.trim();
   const featuresText = document.getElementById('productFeatures')?.value.trim();
@@ -784,6 +795,7 @@ function saveProduct() {
   });
   
   // Validaciones
+    // Sara #43: Validación de campos obligatorios (nombre, categoría, precio, stock, tallas)
   let hasError = false;
   
   if (!name) {
@@ -802,6 +814,7 @@ function saveProduct() {
   
   if (hasError) {
     // Re-habilitar el botón si hay error
+        // Sara #43: No guardar si faltan datos obligatorios o son inválidos
     saveBtn.disabled = false;
     saveBtn.style.opacity = '1';
     saveBtn.style.cursor = 'pointer';
@@ -814,6 +827,7 @@ function saveProduct() {
   // Usar setTimeout para evitar que el evento se dispare múltiples veces
   setTimeout(() => {
     try {
+        // Sara #43: Guardar producto solo si todos los datos obligatorios están presentes
       if (editingProductId) {
         const index = products.findIndex(p => p.id === editingProductId);
         if (index !== -1) {
