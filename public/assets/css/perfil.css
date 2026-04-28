@@ -393,16 +393,6 @@ header {
   background: var(--bg-soft);
 }
 
-.menu-item.logout-menu {
-  color: var(--success);
-  margin-top: 20px;
-}
-
-.menu-item.logout-menu:hover {
-  color: var(--error);
-  background: rgba(239, 68, 68, 0.05);
-}
-
 .content-area {
   flex: 1;
   padding: 40px 60px;
