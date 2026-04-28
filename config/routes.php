@@ -19,11 +19,13 @@ return [
     ['method' => 'GET', 'path' => '/admin/usuarios', 'controller' => 'Admin\\UsuariosController', 'action' => 'index'],
     ['method' => 'GET', 'path' => '/admin/repartidores', 'controller' => 'Admin\\RepartidorController', 'action' => 'index'],
     ['method' => 'GET', 'path' => '/perfil', 'controller' => 'PerfilController', 'action' => 'index'],
-
-    // Clientes (admin)
-['method' => 'GET', 'path' => '/admin/clientes', 'controller' => 'Admin\\ClientesController', 'action' => 'index'],
-['method' => 'POST', 'path' => '/admin/clientes/actualizar-rol', 'controller' => 'Admin\\ClientesController', 'action' => 'updateRole'],
-
-    // Agregar rutas POST para acciones de gestión...
-];
-
+    
+    // Documentos legales y de soporte
+    ['method' => 'GET', 'path' => '/documentos/Pedidos_envios', 'controller' => 'DocumentoController', 'action' => 'pedidosEnvios'],
+    ['method' => 'GET', 'path' => '/documentos/Politicas_devolucion', 'controller' => 'DocumentoController', 'action' => 'politicasDevolucion'],
+    ['method' => 'GET', 'path' => '/documentos/Preguntas', 'controller' => 'DocumentoController', 'action' => 'preguntas'],
+    ['method' => 'GET', 'path' => '/documentos/Guia_Tallas', 'controller' => 'DocumentoController', 'action' => 'guiaTallas'],
+    ['method' => 'GET', 'path' => '/documentos/Terminos', 'controller' => 'DocumentoController', 'action' => 'terminos'],
+    ['method' => 'GET', 'path' => '/documentos/Politicas_Priv', 'controller' => 'DocumentoController', 'action' => 'politicasPrivacidad'],  
+    ['method' => 'GET', 'path' => '/documentos/Politicas_Env', 'controller' => 'DocumentoController', 'action' => 'politicasEnv'], 
+     ];

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Core\Controller;
@@ -28,11 +29,13 @@ class AuthController extends Controller {
 
         if (!$email || !$password) {
             $this->json(['success' => false, 'message' => 'Completa todos los campos']);
+            return;
         }
 
         $user = $this->usuarioModel->findByEmail($email);
         if (!$user || !password_verify($password, $user['password_hash'])) {
             $this->json(['success' => false, 'message' => 'Credenciales incorrectas']);
+            return;
         }
 
         // Guardar en sesión
@@ -40,7 +43,7 @@ class AuthController extends Controller {
             'id' => $user['id'],
             'email' => $user['email'],
             'nombre' => $user['nombre'],
-            'rol' => $user['rol'] ?? 'cliente'   // Asegurar que exista la columna 'rol'
+            'rol' => $user['rol'] ?? 'cliente'
         ];
 
         // Redirección según el rol
@@ -64,24 +67,32 @@ class AuthController extends Controller {
 
         if (!$email || !$nombre || !$password || !$terms) {
             $this->json(['success' => false, 'message' => 'Completa todos los campos y acepta términos']);
+            return;
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->json(['success' => false, 'message' => 'Email inválido']);
+            return;
         }
         if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
             $this->json(['success' => false, 'message' => 'La contraseña no cumple los requisitos']);
+            return;
         }
         if ($this->usuarioModel->findByEmail($email)) {
             $this->json(['success' => false, 'message' => 'El email ya está registrado']);
+            return;
         }
 
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        
+        // Crear usuario sin google_id (tu tabla no tiene esa columna)
         $result = $this->usuarioModel->create([
             'email' => $email,
             'nombre' => $nombre,
             'password_hash' => $passwordHash,
-            'google_id' => null,
-            'rol' => 'cliente'   // Por defecto, cliente
+            'rol' => 'cliente',
+            'acepta_terminos' => $terms,
+            'fecha_registro' => date('Y-m-d H:i:s'),
+            'estado' => 'activo'
         ]);
 
         if ($result) {
@@ -90,8 +101,31 @@ class AuthController extends Controller {
                 'id' => $user['id'],
                 'email' => $user['email'],
                 'nombre' => $user['nombre'],
-                'rol' => 'cliente'
+                'rol' => $user['rol'] ?? 'cliente'
             ];
+            
+            // ==============================================
+            // ENVIAR CORREO DE BIENVENIDA (MÓDULO EXTERNO)
+            // ==============================================
+            $emailSent = false;
+            $emailServicePath = __DIR__ . '/../Libraries/EmailService.php';
+            
+            if (file_exists($emailServicePath)) {
+                require_once $emailServicePath;
+                if (class_exists('\App\Libraries\EmailService')) {
+                    $emailSent = \App\Libraries\EmailService::enviar($email, $nombre, 'bienvenida');
+                    
+                    if (!$emailSent) {
+                        error_log("No se pudo enviar correo de bienvenida a: $email");
+                    }
+                } else {
+                    error_log("EmailService class not found");
+                }
+            } else {
+                error_log("EmailService.php no encontrado en: $emailServicePath");
+            }
+            // ==============================================
+            
             $this->json([
                 'success' => true,
                 'message' => 'Registro exitoso',
@@ -102,26 +136,57 @@ class AuthController extends Controller {
         }
     }
 
-    // Procesar login con Google
+    // Procesar login con Google (SIN google_id - adaptado a tu BD)
     public function googleLogin() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_data'])) {
             $userData = json_decode($_POST['user_data'], true);
-            $email = $userData['email'];
-            $nombre = $userData['name'];
-            $googleId = $userData['sub'];
+            $email = $userData['email'] ?? '';
+            $nombre = $userData['name'] ?? '';
+            $googleId = $userData['sub'] ?? '';
+
+            if (empty($email) || empty($nombre)) {
+                $this->redirect('/auth/login');
+                return;
+            }
 
             $user = $this->usuarioModel->findByEmail($email);
+            $esNuevoRegistro = false;
+
             if (!$user) {
-                $this->usuarioModel->create([
+                // Usuario nuevo - registrar sin google_id
+                $passwordHash = password_hash(bin2hex(random_bytes(16)), PASSWORD_DEFAULT);
+                $result = $this->usuarioModel->create([
                     'email' => $email,
                     'nombre' => $nombre,
-                    'password_hash' => null,
-                    'google_id' => $googleId,
-                    'rol' => 'cliente'
+                    'password_hash' => $passwordHash,
+                    'rol' => 'cliente',
+                    'acepta_terminos' => true,
+                    'email_verificado' => true,  // Google ya verifica el email
+                    'fecha_registro' => date('Y-m-d H:i:s'),
+                    'estado' => 'activo'
                 ]);
-                $user = $this->usuarioModel->findByEmail($email);
-            } elseif (!$user['google_id']) {
-                $this->usuarioModel->updateGoogleId($email, $googleId);
+                
+                if ($result) {
+                    $user = $this->usuarioModel->findByEmail($email);
+                    $esNuevoRegistro = true;
+                }
+            }
+            
+            // Verificar que el usuario existe
+            if (!$user) {
+                $this->redirect('/auth/login');
+                return;
+            }
+            
+            // Enviar correo de bienvenida si es registro nuevo
+            if ($esNuevoRegistro) {
+                $emailServicePath = __DIR__ . '/../Libraries/EmailService.php';
+                if (file_exists($emailServicePath)) {
+                    require_once $emailServicePath;
+                    if (class_exists('\App\Libraries\EmailService')) {
+                        \App\Libraries\EmailService::enviar($email, $nombre, 'bienvenida');
+                    }
+                }
             }
 
             $_SESSION['user'] = [
@@ -132,7 +197,8 @@ class AuthController extends Controller {
             ];
 
             // Redirección según rol
-        $redirectUrl = ($_SESSION['user']['rol'] === 'administrador') ? APP_URL . '/admin' : APP_URL . '/';            $this->redirect($redirectUrl);
+            $redirectUrl = ($_SESSION['user']['rol'] === 'administrador') ? '/admin' : APP_URL . '/';
+            $this->redirect($redirectUrl);
         } else {
             $this->redirect('/auth/login');
         }
@@ -142,20 +208,41 @@ class AuthController extends Controller {
     public function forgotPassword() {
         $data = json_decode(file_get_contents('php://input'), true);
         $email = $data['email'] ?? '';
+        
         if (!$email) {
             $this->json(['success' => false, 'message' => 'Email requerido']);
+            return;
         }
+        
         $user = $this->usuarioModel->findByEmail($email);
         if (!$user) {
             $this->json(['success' => false, 'message' => 'No existe cuenta con ese email']);
+            return;
         }
 
         $token = bin2hex(random_bytes(32));
         $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
         $this->usuarioModel->setResetToken($email, $token, $expires);
-        $resetLink = APP_URL . "/auth/reset-password?token=$token";
-        // Aquí enviar email real (simulado)
-        $this->json(['success' => true, 'message' => "Revisa tu correo (simulado). Enlace: $resetLink"]);
+        
+        // ==============================================
+        // ENVIAR CORREO DE RECUPERACIÓN
+        // ==============================================
+        $emailSent = false;
+        $emailServicePath = __DIR__ . '/../Libraries/EmailService.php';
+        
+        if (file_exists($emailServicePath)) {
+            require_once $emailServicePath;
+            if (class_exists('\App\Libraries\EmailService')) {
+                $emailSent = \App\Libraries\EmailService::enviar($email, $user['nombre'], 'recuperacion', ['token' => $token]);
+            }
+        }
+        // ==============================================
+        
+        $mensaje = $emailSent 
+            ? 'Revisa tu correo para restablecer tu contraseña'
+            : 'No se pudo enviar el correo. Intenta más tarde';
+        
+        $this->json(['success' => $emailSent, 'message' => $mensaje]);
     }
 
     // Mostrar formulario de reset
@@ -174,14 +261,23 @@ class AuthController extends Controller {
         $data = json_decode(file_get_contents('php://input'), true);
         $token = $data['token'] ?? '';
         $password = $data['password'] ?? '';
+        
         $user = $this->usuarioModel->findByResetToken($token);
         if (!$user) {
             $this->json(['success' => false, 'message' => 'Token inválido']);
+            return;
         }
+        
+        if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
+            $this->json(['success' => false, 'message' => 'La contraseña no cumple los requisitos']);
+            return;
+        }
+        
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $this->usuarioModel->updatePassword($user['email'], $passwordHash);
         $this->usuarioModel->clearResetToken($user['email']);
-        $this->json(['success' => true, 'message' => 'Contraseña actualizada']);
+        
+        $this->json(['success' => true, 'message' => 'Contraseña actualizada correctamente']);
     }
 
     // Cerrar sesión
