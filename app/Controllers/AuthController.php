@@ -256,7 +256,7 @@ class AuthController extends Controller {
         $this->view('auth.reset-password', ['token' => $token]);
     }
 
-    // Procesar nuevo password
+       // Procesar nuevo password
     public function resetPassword() {
         $data = json_decode(file_get_contents('php://input'), true);
         $token = $data['token'] ?? '';
@@ -264,11 +264,12 @@ class AuthController extends Controller {
         
         $user = $this->usuarioModel->findByResetToken($token);
         if (!$user) {
-            $this->json(['success' => false, 'message' => 'Token inválido']);
+            $this->json(['success' => false, 'message' => 'Token inválido o expirado']);
             return;
         }
         
-        if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
+        if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || 
+            !preg_match('/[0-9]/', $password) || !preg_match('/[^a-zA-Z0-9]/', $password)) {
             $this->json(['success' => false, 'message' => 'La contraseña no cumple los requisitos']);
             return;
         }
@@ -276,6 +277,15 @@ class AuthController extends Controller {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $this->usuarioModel->updatePassword($user['email'], $passwordHash);
         $this->usuarioModel->clearResetToken($user['email']);
+        
+        // Enviar correo de confirmación de cambio de contraseña
+        $emailServicePath = __DIR__ . '/../Libraries/EmailService.php';
+        if (file_exists($emailServicePath)) {
+            require_once $emailServicePath;
+            if (class_exists('\App\Libraries\EmailService')) {
+                \App\Libraries\EmailService::enviar($user['email'], $user['nombre'], 'cambio-contrasena');
+            }
+        }
         
         $this->json(['success' => true, 'message' => 'Contraseña actualizada correctamente']);
     }
@@ -286,4 +296,67 @@ class AuthController extends Controller {
         session_destroy();
         $this->redirect('/auth/login');
     }
+
+        // Mostrar formulario de cambio de contraseña (usuario logueado)
+    public function showChangePassword() {
+        if (!isset($_SESSION['user'])) {
+            $this->redirect('/auth/login');
+            return;
+        }
+        $this->view('auth.change-password');
+    }
+
+    // Procesar cambio de contraseña (usuario logueado)
+    public function changePassword() {
+        // Verificar que el usuario está logueado
+        if (!isset($_SESSION['user'])) {
+            $this->json(['success' => false, 'message' => 'Debes iniciar sesión']);
+            return;
+        }
+        
+        $data = json_decode(file_get_contents('php://input'), true);
+        $currentPassword = $data['current_password'] ?? '';
+        $newPassword = $data['new_password'] ?? '';
+        
+        if (!$currentPassword || !$newPassword) {
+            $this->json(['success' => false, 'message' => 'Completa todos los campos']);
+            return;
+        }
+        
+        // Validar nueva contraseña
+        if (strlen($newPassword) < 8 || !preg_match('/[A-Z]/', $newPassword) || 
+            !preg_match('/[0-9]/', $newPassword) || !preg_match('/[^a-zA-Z0-9]/', $newPassword)) {
+            $this->json(['success' => false, 'message' => 'La nueva contraseña no cumple los requisitos']);
+            return;
+        }
+        
+        // Obtener usuario actual
+        $user = $this->usuarioModel->findById($_SESSION['user']['id']);
+        
+        if (!$user || !password_verify($currentPassword, $user['password_hash'])) {
+            $this->json(['success' => false, 'message' => 'Contraseña actual incorrecta']);
+            return;
+        }
+        
+        // Actualizar contraseña
+        $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+        $result = $this->usuarioModel->updatePassword($user['email'], $newPasswordHash);
+        
+        if ($result) {
+            // Enviar correo de notificación de cambio
+            $emailServicePath = __DIR__ . '/../Libraries/EmailService.php';
+            if (file_exists($emailServicePath)) {
+                require_once $emailServicePath;
+                if (class_exists('\App\Libraries\EmailService')) {
+                    \App\Libraries\EmailService::enviar($user['email'], $user['nombre'], 'cambio-contrasena');
+                }
+            }
+            
+            $this->json(['success' => true, 'message' => 'Contraseña actualizada correctamente']);
+        } else {
+            $this->json(['success' => false, 'message' => 'Error al actualizar la contraseña']);
+        }
+    }
+
+
 }
