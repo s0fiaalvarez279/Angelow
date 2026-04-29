@@ -27,6 +27,16 @@ return [
     ['method' => 'GET', 'path' => '/documentos/Guia_Tallas', 'controller' => 'DocumentoController', 'action' => 'guiaTallas'],
     ['method' => 'GET', 'path' => '/documentos/Terminos', 'controller' => 'DocumentoController', 'action' => 'terminos'],
     ['method' => 'GET', 'path' => '/documentos/Politicas_Priv', 'controller' => 'DocumentoController', 'action' => 'politicasPrivacidad'],  
+    ['method' => 'GET', 'path' => '/documentos/Politicas_Env', 'controller' => 'DocumentoController', 'action' => 'politicasEnv'],
+    
+        // ==============================================
+    // NUEVAS RUTAS PARA CAMBIO DE CONTRASEÑA
+    // ==============================================
+    ['method' => 'GET', 'path' => '/auth/change-password', 'controller' => 'AuthController', 'action' => 'showChangePassword'],
+    ['method' => 'POST', 'path' => '/auth/change-password', 'controller' => 'AuthController', 'action' => 'changePassword'],
+    ['method' => 'GET', 'path' => '/auth/reset-password', 'controller' => 'AuthController', 'action' => 'showResetForm'],
+    ['method' => 'POST', 'path' => '/auth/reset-password', 'controller' => 'AuthController', 'action' => 'resetPassword'],  
+];
     ['method' => 'GET', 'path' => '/documentos/Politicas_Env', 'controller' => 'DocumentoController', 'action' => 'politicasEnv'], 
      ];
 
