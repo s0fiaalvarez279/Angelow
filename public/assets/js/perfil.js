@@ -5,6 +5,7 @@ let pendingDeleteId = null;
 let pendingDeleteType = null; // 'address', 'card', 'favorite'
 
 // Datos de ejemplo para productos 
+// validaciones echas por samuel 
 const products = [
   { 
     id: 1, 

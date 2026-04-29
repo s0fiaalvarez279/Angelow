@@ -62,7 +62,7 @@ $client_id = '518631585090-vel52de86h7lk3uetco3dc3schnqokh7.apps.googleuserconte
         </div>
     </div>
     
-    <!-- LADO DERECHO - FORMULARIO -->
+    <!-- LADO DERECHO - FORMULARIO  -->
     <div class="auth-right">
         <div class="auth-container">
             <h1 class="auth-title">Iniciar Sesión</h1>
@@ -75,7 +75,7 @@ $client_id = '518631585090-vel52de86h7lk3uetco3dc3schnqokh7.apps.googleuserconte
                 <button class="auth-tab" data-tab="register">REGISTRARSE</button>
             </div>
             
-            <!-- Formulario de Login -->
+            <!-- Formulario de Login echo por samuel y sara -->
             <div id="loginForm" class="auth-form active">
                 <div class="google-btn-wrapper">
                     <div id="g_id_onload"
