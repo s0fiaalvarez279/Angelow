@@ -205,16 +205,37 @@ $user = $_SESSION['user'];
   </div>
 
   <!-- OVERLAYS de carrito y favoritos -->
-  <div id="cartOverlay" class="overlay"><div class="cart"><div class="cart-header"><div><h2>Bolsa de compras</h2><p>Envío gratis</p></div><button onclick="closeCart()" style="background:none;border:none;font-size:28px;cursor:pointer;">✕</button></div><div class="cart-content" id="cartItems"><div style="text-align:center;padding:100px 20px;color:#888;">Cargando...</div></div><div class="cart-footer"><div class="total"><span>Total</span><span id="total">COP $0</span></div><button onclick="proceedToCheckout()" class="checkout">FINALIZAR COMPRA</button></div></div></div>
-  <div id="favoritesOverlay" class="overlay"><div class="fav-sidebar"><div class="fav-header"><div><h2>Mis Favoritos (<span id="favTotal">0</span>)</h2><p>Envío gratis</p></div><button id="closeFavorites" style="background:none;border:none;font-size:28px;cursor:pointer;">✕</button></div><div class="fav-content" id="favoritesList">Cargando...</div></div></div>
+  <div id="cartOverlay" class="overlay">
+    <div class="cart">
+      <div class="cart-header">
+        <div><h2>Bolsa de compras</h2><p>Envío gratis</p></div>
+        <button onclick="closeCart()" style="background:none;border:none;font-size:28px;cursor:pointer;">✕</button>
+      </div>
+      <div class="cart-content" id="cartItems"><div style="text-align:center;padding:100px 20px;color:#888;">Cargando...</div></div>
+      <div class="cart-footer">
+        <div class="total"><span>Total</span><span id="total">COP $0</span></div>
+        <!-- BOTÓN MODIFICADO: redirige a la ruta MVC de compra -->
+        <button onclick="window.location.href='<?= APP_URL ?>/compra'" class="checkout">FINALIZAR COMPRA</button>
+      </div>
+    </div>
+  </div>
+  <div id="favoritesOverlay" class="overlay">
+    <div class="fav-sidebar">
+      <div class="fav-header">
+        <div><h2>Mis Favoritos (<span id="favTotal">0</span>)</h2><p>Envío gratis</p></div>
+        <button id="closeFavorites" style="background:none;border:none;font-size:28px;cursor:pointer;">✕</button>
+      </div>
+      <div class="fav-content" id="favoritesList">Cargando...</div>
+    </div>
+  </div>
 
-  <!-- FOOTER original -->
+  <!-- FOOTER con enlaces corregidos -->
   <footer>
     <div class="footer-content">
       <div class="footer-logo"><img src="<?= APP_URL ?>/assets/imagenes/general/logos.png" alt="ANGELOW"><div class="footer-logo-text">ANGELOW</div><p>Ropa infantil de calidad</p></div>
       <div class="footer-section"><h3>Contacto</h3><p>+57 3135951664</p><p>info@angelow.com</p><p>Medellín, Colombia</p></div>
-      <div class="footer-section"><h3>Ayuda</h3><ul class="footer-links"><li><a href="<?= APP_URL ?>/documentos/Pedidos_envios.html">Pedidos y Envíos</a></li><li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion.html">Devoluciones y Cambios</a></li><li><a href="<?= APP_URL ?>/documentos/Preguntas.html">Preguntas Frecuentes</a></li><li><a href="<?= APP_URL ?>/documentos/Guia_Tallas.html">Guía de Tallas</a></li><li><a href="<?= APP_URL ?>/documentos/Terminos.html">Devoluciones</a></li></ul></div>
-      <div class="footer-section"><h3>Legal</h3><ul class="footer-links"><li><a href="<?= APP_URL ?>/documentos/Politicas_Priv.php">Políticas de Privacidad</a></li><li><a href="<?= APP_URL ?>/documentos/Terminos.php">Términos y Condiciones</a></li><li><a href="<?= APP_URL ?>/documentos/Politicas_Env.php">Políticas de Envío</a></li><li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion.php">Políticas de Devolución</a></li></ul></div>
+      <div class="footer-section"><h3>Ayuda</h3><ul class="footer-links"><li><a href="<?= APP_URL ?>/documentos/Pedidos_envios">Pedidos y Envíos</a></li><li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion">Devoluciones y Cambios</a></li><li><a href="<?= APP_URL ?>/documentos/Preguntas">Preguntas Frecuentes</a></li><li><a href="<?= APP_URL ?>/documentos/Guia_Tallas">Guía de Tallas</a></li><li><a href="<?= APP_URL ?>/documentos/Terminos">Términos y Condiciones</a></li></ul></div>
+      <div class="footer-section"><h3>Legal</h3><ul class="footer-links"><li><a href="<?= APP_URL ?>/documentos/Politicas_Priv">Políticas de Privacidad</a></li><li><a href="<?= APP_URL ?>/documentos/Terminos">Términos y Condiciones</a></li><li><a href="<?= APP_URL ?>/documentos/Politicas_Env">Políticas de Envío</a></li><li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion">Políticas de Devolución</a></li></ul></div>
       <div class="footer-section"><h3>Síguenos</h3><div class="social-links"><a href="https://instagram.com/tuusuario" target="_blank"><img src="https://img.icons8.com/ios-filled/50/instagram-new.png" alt="Instagram"></a><a href="https://facebook.com/tuusuario" target="_blank"><img src="https://img.icons8.com/ios-filled/50/facebook-new.png" alt="Facebook"></a><a href="https://wa.me/573135951664" target="_blank"><img src="https://img.icons8.com/ios-filled/50/whatsapp.png" alt="WhatsApp"></a></div></div>
     </div>
     <div class="footer-bottom"><p>&copy; <span id="currentYear"></span> ANGELOW. Todos los derechos reservados.</p></div>

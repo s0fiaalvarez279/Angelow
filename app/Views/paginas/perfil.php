@@ -1,5 +1,5 @@
 <?php
-// Asegurar que el usuario esté logueado (opcional, se puede hacer en el controlador)
+// Asegurar que el usuario esté logueado
 if (!isset($_SESSION['user'])) {
     header('Location: ' . APP_URL . '/auth/login');
     exit();
@@ -62,7 +62,7 @@ $user = $_SESSION['user'];
     </div>
   </header>
 
-  <!-- CARRITO MODERNO (el contenido se carga con JS) -->
+  <!-- CARRITO MODERNO -->
   <div class="overlay" id="cartOverlay">
     <div class="cart">
       <div class="cart-header">
@@ -80,7 +80,8 @@ $user = $_SESSION['user'];
           <span>Total</span>
           <span id="cartTotal">COP $0</span>
         </div>
-        <button class="checkout" onclick="checkout()">FINALIZAR COMPRA</button>
+        <!-- Botón Finalizar Compra redirige a la ruta MVC /compra -->
+        <button class="checkout" onclick="window.location.href='<?= APP_URL ?>/compra'">FINALIZAR COMPRA</button>
       </div>
     </div>
   </div>
@@ -104,9 +105,6 @@ $user = $_SESSION['user'];
       </div>
       <div class="menu-item" data-section="favoritos">
         <span>Mis Favoritos</span>
-      </div>
-      <div class="menu-item logout-menu" onclick="showLogoutAlert()">
-        <span>Salir</span>
       </div>
     </aside>
 
@@ -611,7 +609,7 @@ $user = $_SESSION['user'];
     </div>
   </div>
 
-    <footer>
+  <footer>
     <div class="footer-content">
       <div class="footer-logo">
         <img src="<?= APP_URL ?>/assets/imagenes/general/logos.png" alt="ANGELOW" onerror="this.src='https://via.placeholder.com/100?text=ANGELOW'">
@@ -627,20 +625,20 @@ $user = $_SESSION['user'];
       <div class="footer-section">
         <h3>Ayuda</h3>
         <ul class="footer-links">
-          <li><a href="<?= APP_URL ?>/documentos/Pedidos_envios.html">Pedidos y Envíos</a></li>
-          <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion.html">Devoluciones y Cambios</a></li>
-          <li><a href="<?= APP_URL ?>/documentos/Preguntas.html">Preguntas Frecuentes</a></li>
-          <li><a href="<?= APP_URL ?>/documentos/Guia_Tallas.html">Guía de Tallas</a></li>
-          <li><a href="<?= APP_URL ?>/documentos/Terminos.html">Devoluciones</a></li>
+          <li><a href="<?= APP_URL ?>/documentos/Pedidos_envios">Pedidos y Envíos</a></li>
+          <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion">Devoluciones y Cambios</a></li>
+          <li><a href="<?= APP_URL ?>/documentos/Preguntas">Preguntas Frecuentes</a></li>
+          <li><a href="<?= APP_URL ?>/documentos/Guia_Tallas">Guía de Tallas</a></li>
+          <li><a href="<?= APP_URL ?>/documentos/Terminos">Términos y Condiciones</a></li>
         </ul>
       </div>
       <div class="footer-section">
         <h3>Legal</h3>
         <ul class="footer-links">
-          <li><a href="<?= APP_URL ?>/documentos/Politicas_Priv.php">Políticas de Privacidad</a></li>
-          <li><a href="<?= APP_URL ?>/documentos/Terminos.php">Términos y Condiciones</a></li>
-          <li><a href="<?= APP_URL ?>/documentos/Politicas_Env.php">Políticas de Envío</a></li>
-          <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion.php">Políticas de Devolución</a></li>
+          <li><a href="<?= APP_URL ?>/documentos/Politicas_Priv">Políticas de Privacidad</a></li>
+          <li><a href="<?= APP_URL ?>/documentos/Terminos">Términos y Condiciones</a></li>
+          <li><a href="<?= APP_URL ?>/documentos/Politicas_Env">Políticas de Envío</a></li>
+          <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion">Políticas de Devolución</a></li>
         </ul>
       </div>
       <div class="footer-section">

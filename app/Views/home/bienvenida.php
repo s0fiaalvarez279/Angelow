@@ -39,6 +39,8 @@ $user = $user ?? null;
 
 <div class="toast-container" id="toastContainer"></div>
 
+
+  <!-- samuel creo el logo -->
 <header>
   <div class="logo">
     <img src="<?= APP_URL ?>/assets/imagenes/general/logos.png" alt="ANGELOW" class="logo-img">
@@ -63,6 +65,7 @@ $user = $user ?? null;
 
     <div class="icon-btn" id="favBtnHeader">
       <img src="<?= APP_URL ?>/assets/imagenes/general/favoritos.png" alt="Favoritos" style="width:24px;" onerror="this.src='https://via.placeholder.com/24?text=fav'">
+      <!-- Sofia #14: Contador visible de favoritos (ícono del header) -->
       <span id="favHeaderBadge" class="badge" style="display:none">0</span>
     </div>
 
@@ -73,6 +76,7 @@ $user = $user ?? null;
         <a href="<?= APP_URL ?>/seguimiento" class="dropdown-item" id="trackOrderLink">Rastrea tu pedido</a>
         <a href="#" class="dropdown-item" id="openFavoritesFromMenu">
           <span>Mis Favoritos</span>
+          <!-- Sofia #14: Contador en el menú de perfil -->
           <span id="favBadge" class="badge" style="position:static; margin-left:auto; display:none;">0</span>
         </a>
       </div>
@@ -80,10 +84,15 @@ $user = $user ?? null;
   </div>
 </header>
 
+<!-- Sofia #9: Contenedor de categorías para filtrado -->
 <div class="categories">
   <div class="categories-inner" id="categoriesList"></div>
 </div>
 
+<!-- Sofia #9: Grid de productos donde se muestran resultados (incluye manejo de cero resultados) -->
+<!-- Sofia #15: Visualización de productos - imagen, nombre, categoría, precio (información mínima obligatoria). Cada producto es un botón que abre un modal con detalles completos. -->
+<!-- Sofia #13: Visualización de disponibilidad de producto (stock) en tarjetas y modales. -->
+<!-- Sara #16: Agregar directamente al carrito desde catálogo - selección de talla en el modal, validación de stock y confirmación con toast / actualización del badge del carrito -->
 <section>
   <div class="products-grid" id="productsGrid"></div>
 </section>
@@ -102,6 +111,7 @@ $user = $user ?? null;
       </div>
       <button onclick="closeCart()" style="background:none;border:none;font-size:28px;cursor:pointer;">✕</button>
     </div>
+    <!-- Sara #18: Modificación de cantidades en el carrito con botones +/- que respetan stock mínimo y disponible -->
     <div class="cart-content" id="cartItems">
       <div style="text-align:center;padding:100px 20px;color:#888;">Tu carrito está vacío</div>
     </div>
@@ -119,6 +129,7 @@ $user = $user ?? null;
   <div class="fav-sidebar">
     <div class="fav-header">
       <div>
+        <!-- dentro del sidebar de favoritos -->
         <h2>Mis Favoritos (<span id="favTotal">0</span>)</h2>
         <p>Envío gratis</p>
       </div>
@@ -144,21 +155,23 @@ $user = $user ?? null;
     <div class="footer-section">
       <h3>Ayuda</h3>
       <ul class="footer-links">
-        <li><a href="<?= APP_URL ?>/documentos/Pedidos_envios.html">Pedidos y Envíos</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion.html">Devoluciones y Cambios</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Preguntas.html">Preguntas Frecuentes</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Guia_Tallas.html">Guía de Tallas</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Terminos.html">Devoluciones</a></li>
-      </ul>
+    <li><a href="<?= APP_URL ?>/documentos/Pedidos_envios">Pedidos y Envíos</a></li>
+    <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion">Devoluciones y Cambios</a></li>
+    <li><a href="<?= APP_URL ?>/documentos/Preguntas">Preguntas Frecuentes</a></li>
+    <li><a href="<?= APP_URL ?>/documentos/Guia_Tallas">Guía de Tallas</a></li>
+    <li><a href="<?= APP_URL ?>/documentos/Terminos">Términos y Condiciones</a></li>
+       </ul>
     </div>
     <div class="footer-section">
-      <h3>Legal</h3>
-      <ul class="footer-links">
-        <li><a href="<?= APP_URL ?>/documentos/Politicas_Priv.php">Políticas de Privacidad</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Terminos.php">Términos y Condiciones</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Politicas_Env.php">Políticas de Envío</a></li>
-        <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion.php">Políticas de Devolución</a></li>
-      </ul>
+      <div class="footer-section">
+    <h3>Legal</h3>
+    <ul class="footer-links">
+        <li><a href="<?= APP_URL ?>/documentos/Politicas_Priv">Políticas de Privacidad</a></li>
+        <li><a href="<?= APP_URL ?>/documentos/Terminos">Términos y Condiciones</a></li>
+        <li><a href="<?= APP_URL ?>/documentos/Politicas_Env">Políticas de Envío</a></li>
+        <li><a href="<?= APP_URL ?>/documentos/Politicas_devolucion">Políticas de Devolución</a></li>
+    </ul>
+</div>
     </div>
     <div class="footer-section">
       <h3>Síguenos</h3>
