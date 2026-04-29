@@ -18,6 +18,7 @@ return [
     ['method' => 'GET', 'path' => '/admin/pedidos', 'controller' => 'Admin\\PedidosController', 'action' => 'index'],
     ['method' => 'GET', 'path' => '/admin/usuarios', 'controller' => 'Admin\\UsuariosController', 'action' => 'index'],
     ['method' => 'GET', 'path' => '/admin/repartidores', 'controller' => 'Admin\\RepartidorController', 'action' => 'index'],
+    ['method' => 'GET', 'path' => '/perfil', 'controller' => 'PerfilController', 'action' => 'index'],
     
     // Documentos legales y de soporte
     ['method' => 'GET', 'path' => '/documentos/Pedidos_envios', 'controller' => 'DocumentoController', 'action' => 'pedidosEnvios'],
@@ -36,3 +37,6 @@ return [
     ['method' => 'GET', 'path' => '/auth/reset-password', 'controller' => 'AuthController', 'action' => 'showResetForm'],
     ['method' => 'POST', 'path' => '/auth/reset-password', 'controller' => 'AuthController', 'action' => 'resetPassword'],  
 ];
+    ['method' => 'GET', 'path' => '/documentos/Politicas_Env', 'controller' => 'DocumentoController', 'action' => 'politicasEnv'], 
+     ];
+
