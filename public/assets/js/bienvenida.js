@@ -209,27 +209,59 @@ function updateUserUI() {
   const loginLink = document.getElementById('loginLink');
   const dropdownMenu = document.getElementById('dropdownMenu');
   
+  // Limpiar el menú desplegable para evitar duplicados y asegurar el orden correcto
+  dropdownMenu.innerHTML = '';
+  
   if (currentUser) {
     const isAdmin = currentUser.rol === 'administrador';
     
     if (isAdmin) {
+      // Cambiar el texto del botón principal a "Administración"
       loginLink.textContent = 'Administración';
- loginLink.href = APP_URL + '/admin';
+      loginLink.href = APP_URL + '/admin';
+      loginLink.onclick = null;
+      
+      // 1. Opción Administración (dentro del dropdown)
+      const adminItem = document.createElement('a');
+      adminItem.href = APP_URL + '/admin';
+      adminItem.className = 'dropdown-item';
+      adminItem.innerHTML = '<i class="fas fa-tachometer-alt"></i> Administración';
+      dropdownMenu.appendChild(adminItem);
+      
+      // 2. Opción Inventario (solo para administradores) - Redirige a inventario.php
+      const inventoryItem = document.createElement('a');
+      inventoryItem.href = APP_URL + '/admin/inventario'; 
+      inventoryItem.className = 'dropdown-item';
+      inventoryItem.innerHTML = '<i class="fas fa-boxes"></i> Inventario';
+      dropdownMenu.appendChild(inventoryItem);
     } else {
+      // Usuario normal: botón "Mi cuenta"
       loginLink.textContent = 'Mi cuenta';
       loginLink.href = APP_URL + '/perfil';
+      loginLink.onclick = null;
     }
-    loginLink.onclick = null;
     
-    // Eliminar elementos existentes para evitar duplicados
-    const existingLogout = document.querySelector('.dropdown-item.logout-item');
-    if (existingLogout) existingLogout.remove();
+    // Opciones comunes para todos los usuarios autenticados
+    const trackItem = document.createElement('a');
+    trackItem.href = APP_URL + '/rastrear';
+    trackItem.className = 'dropdown-item';
+    trackItem.innerHTML = '<i class="fas fa-truck"></i> Rastrea tu pedido';
+    dropdownMenu.appendChild(trackItem);
     
-    // Ya NO se crea el enlace "Administración"
+    const favItem = document.createElement('a');
+    favItem.href = '#';
+    favItem.className = 'dropdown-item';
+    favItem.innerHTML = '<i class="fas fa-heart"></i> Mis Favoritos';
+    favItem.onclick = (e) => {
+      e.preventDefault();
+      openFavorites();
+    };
+    dropdownMenu.appendChild(favItem);
     
+    // Cerrar sesión
     const logoutItem = document.createElement('a');
     logoutItem.href = '#';
-    logoutItem.className = 'dropdown-item logout-item';
+    logoutItem.className = 'dropdown-item';
     logoutItem.innerHTML = '<i class="fas fa-sign-out-alt"></i> Cerrar sesión';
     logoutItem.onclick = (e) => {
       e.preventDefault();
@@ -238,6 +270,7 @@ function updateUserUI() {
     dropdownMenu.appendChild(logoutItem);
     
   } else {
+    // Usuario no autenticado
     loginLink.textContent = 'Iniciar sesión';
     loginLink.href = '#';
     loginLink.onclick = (e) => {
@@ -246,9 +279,22 @@ function updateUserUI() {
       window.location.href = APP_URL + `/auth/login?redirect=${redirect}`;
     };
     
+    // Opciones para invitados
+    const loginItem = document.createElement('a');
+    loginItem.href = APP_URL + '/auth/login';
+    loginItem.className = 'dropdown-item';
+    loginItem.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
+    dropdownMenu.appendChild(loginItem);
+    
+    const registerItem = document.createElement('a');
+    registerItem.href = APP_URL + '/auth/register';
+    registerItem.className = 'dropdown-item';
+    registerItem.innerHTML = '<i class="fas fa-user-plus"></i> Registrarse';
+    dropdownMenu.appendChild(registerItem);
+  }
+    
     const logoutItem = document.querySelector('.dropdown-item.logout-item');
     if (logoutItem) logoutItem.remove();
-  }
 }
 
 function logout() {
@@ -899,3 +945,4 @@ renderCart();
 renderFavorites();
 updateFavBadges();
 checkPendingFavorite();
+

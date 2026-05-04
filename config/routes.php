@@ -19,6 +19,7 @@ return [
     ['method' => 'GET', 'path' => '/admin/usuarios', 'controller' => 'Admin\\UsuariosController', 'action' => 'index'],
     ['method' => 'GET', 'path' => '/admin/repartidores', 'controller' => 'Admin\\RepartidorController', 'action' => 'index'],
     ['method' => 'GET', 'path' => '/perfil', 'controller' => 'PerfilController', 'action' => 'index'],
+    ['method' => 'GET', 'path' => '/admin/inventario', 'controller' => 'Admin\\InventarioController', 'action' => 'index'],
     
     // Documentos legales y de soporte
     ['method' => 'GET', 'path' => '/documentos/Pedidos_envios', 'controller' => 'DocumentoController', 'action' => 'pedidosEnvios'],
@@ -29,14 +30,15 @@ return [
     ['method' => 'GET', 'path' => '/documentos/Politicas_Priv', 'controller' => 'DocumentoController', 'action' => 'politicasPrivacidad'],  
     ['method' => 'GET', 'path' => '/documentos/Politicas_Env', 'controller' => 'DocumentoController', 'action' => 'politicasEnv'],
     
-        // ==============================================
     // NUEVAS RUTAS PARA CAMBIO DE CONTRASEÑA
-    // ==============================================
     ['method' => 'GET', 'path' => '/auth/change-password', 'controller' => 'AuthController', 'action' => 'showChangePassword'],
     ['method' => 'POST', 'path' => '/auth/change-password', 'controller' => 'AuthController', 'action' => 'changePassword'],
     ['method' => 'GET', 'path' => '/auth/reset-password', 'controller' => 'AuthController', 'action' => 'showResetForm'],
-    ['method' => 'POST', 'path' => '/auth/reset-password', 'controller' => 'AuthController', 'action' => 'resetPassword'],  
+    ['method' => 'POST', 'path' => '/auth/reset-password', 'controller' => 'AuthController', 'action' => 'resetPassword'], 
+    
+    // Rutas para contacto
+    ['method' => 'GET', 'path' => '/contactenos', 'controller' => 'ContactoController', 'action' => 'index'],
+    ['method' => 'POST', 'path' => '/contacto/enviar', 'controller' => 'ContactoController', 'action' => 'enviar'],
+   
 ];
-    ['method' => 'GET', 'path' => '/documentos/Politicas_Env', 'controller' => 'DocumentoController', 'action' => 'politicasEnv'], 
-     ];
-
+    

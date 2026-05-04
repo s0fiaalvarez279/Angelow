@@ -58,6 +58,10 @@ $user = $user ?? null;
   </div>
 
   <div class="header-icons">
+     <div class="icon-btn" id="contactBtn" onclick="window.location.href='<?= APP_URL ?>/contactenos'">
+      <img src="<?= APP_URL ?>/assets/imagenes/general/contactenos.png" alt="Contáctanos" style="width:24px;">
+    </div>
+
     <div class="icon-btn" id="cartBtnHeader">
       <img src="<?= APP_URL ?>/assets/imagenes/general/carro.png" alt="Carrito" style="width:24px;" onerror="this.src='https://via.placeholder.com/24?text=cart'">
       <span id="cartCount" class="badge" style="display:none"></span>

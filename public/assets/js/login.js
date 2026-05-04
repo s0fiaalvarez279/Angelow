@@ -1,5 +1,3 @@
-// login.js - Versión MVC funcional
-// La variable APP_URL debe estar definida en el HTML (<script>const APP_URL = '...';</script>)
 
 // ELEMENTOS DEL DOM
 const messageBox = document.getElementById('messageBox');
