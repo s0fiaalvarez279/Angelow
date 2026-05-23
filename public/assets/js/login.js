@@ -1,10 +1,14 @@
-
 // ELEMENTOS DEL DOM
 const messageBox = document.getElementById('messageBox');
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');
 const forgotForm = document.getElementById('forgotPasswordForm');
 const tabs = document.querySelectorAll('.auth-tab');
+
+// Normalizar APP_URL: eliminar barra final si existe (evita duplicación)
+if (typeof APP_URL !== 'undefined' && APP_URL.endsWith('/')) {
+    window.APP_URL = APP_URL.slice(0, -1);
+}
 
 // MANEJO DE TABS
 tabs.forEach(tab => {
@@ -127,7 +131,7 @@ function hideMessage() {
     if (messageBox) messageBox.style.display = 'none';
 }
 
-// LOGIN CON EMAIL
+// LOGIN CON EMAIL - CORREGIDO (evita duplicar URL)
 window.handleEmailLogin = async function() {
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value;
@@ -157,8 +161,20 @@ window.handleEmailLogin = async function() {
         if (data.success) {
             showMessage(data.message, 'success');
             setTimeout(() => {
-const redirectUrl = data.redirect ? APP_URL + data.redirect : APP_URL + '/';
-        window.location.href = redirectUrl;            }, 1000);
+                let redirectUrl = APP_URL + '/';  // por defecto: inicio
+                if (data.redirect) {
+                    // Si es URL absoluta (http...), usarla directamente
+                    if (data.redirect.startsWith('http')) {
+                        redirectUrl = data.redirect;
+                    } else {
+                        // Si es relativa, concatenar limpiando barras
+                        const cleanBase = APP_URL.replace(/\/$/, '');
+                        const cleanRedirect = data.redirect.replace(/^\//, '');
+                        redirectUrl = cleanBase + '/' + cleanRedirect;
+                    }
+                }
+                window.location.href = redirectUrl;
+            }, 1000);
         } else {
             showMessage(data.message);
             showLoading('loginButton', false);

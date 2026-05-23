@@ -47,12 +47,12 @@ class AuthController extends Controller {
         ];
 
         // Redirección según el rol
-        $redirectUrl = ($_SESSION['user']['rol'] === 'administrador') ? '/admin' : APP_URL . '/';
+        $redirectUrl = ($_SESSION['user']['rol'] === 'administrador') ? '/admin' : '/';
 
         $this->json([
             'success' => true,
             'message' => 'Login exitoso',
-            'redirect' => $redirectUrl,
+            'redirect' => '/',
             'rol' => $_SESSION['user']['rol']
         ]);
     }
@@ -197,7 +197,7 @@ class AuthController extends Controller {
             ];
 
             // Redirección según rol
-            $redirectUrl = ($_SESSION['user']['rol'] === 'administrador') ? '/admin' : APP_URL . '/';
+            $redirectUrl = ($_SESSION['user']['rol'] === 'administrador') ? '/admin' : '/';
             $this->redirect($redirectUrl);
         } else {
             $this->redirect('/auth/login');
