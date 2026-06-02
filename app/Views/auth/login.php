@@ -15,7 +15,10 @@ $client_id = '518631585090-vel52de86h7lk3uetco3dc3schnqokh7.apps.googleuserconte
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ANGELOW - Iniciar Sesión</title>
     <!-- Inyección de la URL base para JavaScript -->
-    <script>const APP_URL = '<?= APP_URL ?>';</script>
+<script>
+    const APP_URL = "<?php echo rtrim(APP_URL, '/'); ?>";
+    console.log('APP_URL desde PHP:', APP_URL); // Verifica que no tenga barra final
+</script>    
     <link rel="shortcut icon" href="<?= APP_URL ?>/assets/imagenes/general/favico.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -71,9 +74,9 @@ $client_id = '518631585090-vel52de86h7lk3uetco3dc3schnqokh7.apps.googleuserconte
             
             <!-- Tabs -->
             <div class="auth-tabs">
-                <button class="auth-tab active" data-tab="login">INICIAR SESIÓN</button>
+                <button class="auth-tab active" data-tab="login">INICIAR SESIÓN</b/utton>
                 <button class="auth-tab" data-tab="register">REGISTRARSE</button>
-            </div>
+            </div> 
             
             <!-- Formulario de Login echo por samuel y sara -->
             <div id="loginForm" class="auth-form active">

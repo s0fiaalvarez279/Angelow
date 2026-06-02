@@ -1244,7 +1244,8 @@ footer {
   color: #94a3b8;
 }
 
-/*  RESPONSIVE  */
+/*  ==========  MEJORAS PARA MÓVILES  ==========  */
+
 @media (max-width: 1024px) {
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -1273,7 +1274,11 @@ footer {
     gap: 12px;
   }
   .card-container {
-    height: 320px;
+    height: auto;
+    max-width: 100%;
+  }
+  .card {
+    height: auto;
   }
   .modal {
     position: static;
@@ -1284,6 +1289,11 @@ footer {
     padding: 8px 0 0;
     height: auto;
     margin-top: 8px;
+    backdrop-filter: none;
+  }
+  .card-container:hover .modal {
+    transform: none;
+    border-color: transparent;
   }
   .cart,
   .fav-sidebar {
@@ -1305,6 +1315,9 @@ footer {
   }
   .detail-actions {
     flex-direction: column;
+  }
+  .detail-action-btn {
+    width: 100%;
   }
 }
 
@@ -1335,12 +1348,28 @@ footer {
     height: 40px;
     font-size: 22px;
   }
+  .categories-inner {
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+  .cat-item {
+    font-size: 1.2rem;
+  }
+  .toast-container {
+    right: 10px;
+    left: 10px;
+  }
+  .toast {
+    max-width: calc(100% - 20px);
+    min-width: auto;
+    width: auto;
+  }
 }
 
 @media (max-width: 480px) {
   .products-grid {
     grid-template-columns: 1fr;
-    max-width: 300px;
+    max-width: 100%;
   }
   .fav-item {
     grid-template-columns: 1fr;
@@ -1354,10 +1383,82 @@ footer {
   .detail-main-image {
     height: 250px;
   }
+  h1 {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  section {
+    padding: 40px 16px;
+  }
+  .buttons {
+    flex-wrap: wrap;
+  }
+  .buy-btn {
+    flex: 1;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  .fav-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .size-box {
+    width: 38px;
+    height: 38px;
+    font-size: 12px;
+  }
+  .cart-header,
+  .fav-header {
+    padding: 20px;
+  }
+  .cart-item,
+  .fav-item {
+    grid-template-columns: 80px 1fr auto;
+    gap: 12px;
+    padding: 16px;
+  }
+  .cart-item img,
+  .fav-item-img {
+    width: 70px;
+    height: 90px;
+  }
+  .cart-info h4,
+  .fav-item-info h4 {
+    font-size: 14px;
+  }
+  .footer-content {
+    gap: 30px;
+    text-align: center;
+  }
+  .footer-section h3 {
+    font-size: 18px;
+  }
+  .social-links a {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 380px) {
+  .detail-size-box {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 8px;
+    font-size: 0.8rem;
+  }
+  .detail-name {
+    font-size: 1.5rem;
+  }
+  .detail-price {
+    font-size: 1.8rem;
+  }
+  .buy-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
 }
 
 /*  CHATBOT BOTPRESS - ESTILOS  */
-/* Forzar visibilidad del contenedor del chat */
 .bp-webchat-container,
 .bp-widget-webchat,
 iframe[src*="botpress"],
@@ -1367,7 +1468,6 @@ iframe[src*="bpcontent"] {
   z-index: 999999 !important;
 }
 
-/* Asegurar que el botón flotante sea visible */
 .bpFabContainer {
   position: fixed !important;
   bottom: 20px !important;
@@ -1375,7 +1475,6 @@ iframe[src*="bpcontent"] {
   z-index: 99999 !important;
 }
 
-/* Opcional: personalizar el botón del chat */
 .bpFab {
   background-color: #ff6b6b !important;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
@@ -1384,4 +1483,16 @@ iframe[src*="bpcontent"] {
 .bpFab:hover {
   transform: scale(1.05) !important;
   transition: transform 0.2s !important;
+}
+
+/* Ajuste del chatbot en móvil */
+@media (max-width: 600px) {
+  .bpFabContainer {
+    bottom: 16px !important;
+    right: 16px !important;
+  }
+  .bpFab {
+    width: 50px !important;
+    height: 50px !important;
+  }
 }
