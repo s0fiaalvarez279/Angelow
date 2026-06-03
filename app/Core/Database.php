@@ -29,4 +29,12 @@ class Database {
     public function getConnection() {
         return $this->conn;
     }
+
+    // NUEVO MÉTODO QUERY (estático para compatibilidad)
+    public static function query($sql, $params = []) {
+        $db = self::getInstance();
+        $stmt = $db->getConnection()->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
+    }
 }

@@ -100,6 +100,7 @@ $user = $user ?? null;
   <div class="footer-bottom"><p>&copy; <span id="currentYear"></span> ANGELOW. Todos los derechos reservados.</p></div>
 </footer>
 
+<!-- Solo estos scripts -->
 <script src="<?= APP_URL ?>/assets/chatbot/botpress.js"></script>
 <script src="<?= APP_URL ?>/assets/js/bienvenida.js"></script>
 <script src="<?= APP_URL ?>/assets/js/carrusel.js"></script>

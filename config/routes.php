@@ -40,5 +40,15 @@ return [
     ['method' => 'GET', 'path' => '/contactenos', 'controller' => 'ContactoController', 'action' => 'index'],
     ['method' => 'POST', 'path' => '/contacto/enviar', 'controller' => 'ContactoController', 'action' => 'enviar'],
    
+     // ========== RUTAS API CARRITO ==========
+    ['method' => 'GET',    'path' => '/api/carrito',          'controller' => 'Api\\CarritoController', 'action' => 'index'],
+    ['method' => 'POST',   'path' => '/api/carrito/agregar',   'controller' => 'Api\\CarritoController', 'action' => 'agregar'],
+    ['method' => 'POST',   'path' => '/api/carrito/actualizar','controller' => 'Api\\CarritoController', 'action' => 'actualizar'],
+    ['method' => 'DELETE', 'path' => '/api/carrito/eliminar',  'controller' => 'Api\\CarritoController', 'action' => 'eliminar'],
+    ['method' => 'POST',   'path' => '/api/carrito/sincronizar','controller' => 'Api\\CarritoController', 'action' => 'sincronizar'],
+
+    // ========== RUTAS API FAVORITOS ==========
+     ['method' => 'GET',    'path' => '/api/favoritos',         'controller' => 'Api\\FavoritoController', 'action' => 'index'],
+    ['method' => 'POST',   'path' => '/api/favoritos/agregar',  'controller' => 'Api\\FavoritoController', 'action' => 'agregar'],
+    ['method' => 'DELETE', 'path' => '/api/favoritos/eliminar', 'controller' => 'Api\\FavoritoController', 'action' => 'eliminar'],
 ];
-    
