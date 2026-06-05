@@ -24,15 +24,15 @@ class EmailService {
             return false;
         }
         
-        // Configuración SMTP de Gmail
-        $smtpConfig = [
-            'host' => 'smtp.gmail.com',
-            'username' => 'angelow.contacto@gmail.com',
-            'password' => 'vncn qkjn upop iuey',
-            'port' => 587,
-            'from_email' => 'angelow.contacto@gmail.com',
-            'from_name' => 'Angelow'
-        ];
+         // Configuración SMTP desde variables de entorno
+         $smtpConfig = [
+             'host' => $_ENV['SMTP_HOST'] ?? 'smtp.gmail.com',
+             'username' => $_ENV['SMTP_USERNAME'] ?? 'angelow.contacto@gmail.com',
+             'password' => $_ENV['SMTP_PASSWORD'] ?? 'vncn qkjn upop iuey',
+             'port' => $_ENV['SMTP_PORT'] ?? 587,
+             'from_email' => $_ENV['SMTP_FROM_EMAIL'] ?? 'angelow.contacto@gmail.com',
+             'from_name' => $_ENV['SMTP_FROM_NAME'] ?? 'Angelow'
+         ];
         
         $mail = new PHPMailer(true);
         
