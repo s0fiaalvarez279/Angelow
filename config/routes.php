@@ -12,7 +12,7 @@ return [
     ['method' => 'POST', 'path' => '/procesar-compra', 'controller' => 'CompraController', 'action' => 'procesar'],
     ['method' => 'GET', 'path' => '/factura', 'controller' => 'FacturaController', 'action' => 'index'],
     ['method' => 'GET', 'path' => '/seguimiento', 'controller' => 'SeguimientoController', 'action' => 'index'],
-    ['method' => 'GET', 'path' => '/debug-session', 'controller' => 'DebugController', 'action' => 'session'],
+    // ['method' => 'GET', 'path' => '/debug-session', 'controller' => 'DebugController', 'action' => 'session'],
     // Panel de administración
     ['method' => 'GET', 'path' => '/admin', 'controller' => 'Admin\\DashboardController', 'action' => 'index'],
     ['method' => 'GET', 'path' => '/admin/pedidos', 'controller' => 'Admin\\PedidosController', 'action' => 'index'],

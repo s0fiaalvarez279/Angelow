@@ -58,15 +58,16 @@ try {
         'login_time' => date('Y-m-d H:i:s')
     ];
     
-    // Cookie de remember me (30 días)
-    if ($remember) {
-        $token = generateToken(60);
-        
-        $stmt = $pdo->prepare("UPDATE usuarios SET remember_token = ? WHERE id = ?");
-        $stmt->execute([$token, $usuario['id']]);
-        
-        setcookie('remember_token', $token, time() + (86400 * 30), '/', '', false, true);
-    }
+     // Cookie de remember me (30 días)
+     if ($remember) {
+         $token = generateToken(60);
+         
+         $stmt = $pdo->prepare("UPDATE usuarios SET remember_token = ? WHERE id = ?");
+         $stmt->execute([$token, $usuario['id']]);
+         
+         $secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+         setcookie('remember_token', $token, time() + (86400 * 30), '/', '', $secure, true);
+     }
     
     // Registrar actividad
     $stmt = $pdo->prepare("INSERT INTO logs_actividad (usuario_id, tipo, accion, ip_address, fecha) VALUES (?, 'usuario', 'login', ?, NOW())");

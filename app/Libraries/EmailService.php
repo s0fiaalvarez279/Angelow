@@ -26,11 +26,11 @@ class EmailService {
         
          // Configuración SMTP desde variables de entorno
          $smtpConfig = [
-             'host' => $_ENV['SMTP_HOST'] ?? 'smtp.gmail.com',
-             'username' => $_ENV['SMTP_USERNAME'] ?? 'angelow.contacto@gmail.com',
-             'password' => $_ENV['SMTP_PASSWORD'] ?? 'vncn qkjn upop iuey',
+             'host' => $_ENV['SMTP_HOST'] ?? '',
+             'username' => $_ENV['SMTP_USERNAME'] ?? '',
+             'password' => $_ENV['SMTP_PASSWORD'] ?? '',
              'port' => $_ENV['SMTP_PORT'] ?? 587,
-             'from_email' => $_ENV['SMTP_FROM_EMAIL'] ?? 'angelow.contacto@gmail.com',
+             'from_email' => $_ENV['SMTP_FROM_EMAIL'] ?? '',
              'from_name' => $_ENV['SMTP_FROM_NAME'] ?? 'Angelow'
          ];
         

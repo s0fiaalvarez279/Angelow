@@ -1,10 +1,10 @@
-# 🛍️ Angelow – Plataforma de E‑Commerce
+# Angelow – Plataforma de E‑Commerce
 
 Sistema de venta en línea desarrollado con PHP puro (sin framework) que permite a los usuarios registrarse, iniciar sesión, explorar productos, añadirlos al carrito, gestionar favoritos y completar compras. Incluye panel de administración para gestión de inventario, pedidos y usuarios.
 
 ---
 
-## 📑 Tabla de Contenidos
+## Tabla de Contenidos
 - [Características Principales](#-características-principales)
 - [Tecnologías Utilizadas](#-tecnologías-utilizadas)
 - [Estructura del Proyecto](#-estructura-del-proyecto)
@@ -17,7 +17,7 @@ Sistema de venta en línea desarrollado con PHP puro (sin framework) que permite
 
 ---
 
-## 🚀 Características Principales
+## Características Principales
 
 - **Autenticación de usuarios** (registro, login, logout) con sesiones PHP y opción de login con Google (OAuth2).
 - **Gestión de carrito** (añadir, eliminar, actualizar cantidades) persistente en sesión.
@@ -37,7 +37,7 @@ Sistema de venta en línea desarrollado con PHP puro (sin framework) que permite
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 | Área | Tecnologías |
 |------|--------------|
@@ -51,7 +51,7 @@ Sistema de venta en línea desarrollado con PHP puro (sin framework) que permite
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 Angelow/
@@ -137,7 +137,7 @@ Angelow/
 
 ---
 
-## 🔧 Instalación y Configuración
+## Instalación y Configuración
 
 ### Requisitos
 - PHP ≥ 7.4
@@ -185,7 +185,7 @@ Angelow/
 
 ---
 
-## ▶️ Uso
+## Uso
 
 ### Para usuarios finales
 - **Registro**: Haz clic en “Registrarse” y completa el formulario.
@@ -206,7 +206,7 @@ Angelow/
 
 ---
 
-## 🌐 APIs Externas
+## APIs Externas
 
 - **Google Sign-In (OAuth2)**: Autenticación con cuenta de Google.
 - **PHPMailer** (vía Composer): Envío de correos electrónicos.
@@ -219,7 +219,7 @@ Angelow/
 
 ---
 
-## 🗃️ Base de Datos
+## Base de Datos
 
 El archivo `angelow.sql` contiene las siguientes tablas principales:
 
@@ -235,7 +235,7 @@ Puedes revisar el archivo SQL para ver la estructura completa y datos de ejemplo
 
 ---
 
-## 🙏 Créditos
+## Créditos
 
 - Desarrollado por **[Tu Nombre / Equipo de Desarrollo]**.
 - Bootstrap 5: https://getbootstrap.com
@@ -246,7 +246,7 @@ Puedes revisar el archivo SQL para ver la estructura completa y datos de ejemplo
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto se distribuye bajo la licencia **MIT**. Consulta el archivo `LICENSE` para más información.
 

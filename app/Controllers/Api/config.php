@@ -1,9 +1,9 @@
 <?php
 header('Content-Type: application/json');
-$host = 'localhost';
-$user = 'root';
-$password = '';          // Si tienes contraseña, cámbiala
-$database = 'angelow_db';
+$host = $_ENV['DB_HOST'] ?? 'localhost';
+$user = $_ENV['DB_USER'] ?? 'root';
+$password = $_ENV['DB_PASS'] ?? '';
+$database = $_ENV['DB_NAME'] ?? 'angelow_db';
 
 $conn = new mysqli($host, $user, $password, $database);
 if ($conn->connect_error) {

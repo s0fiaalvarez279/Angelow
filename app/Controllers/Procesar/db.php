@@ -1,9 +1,9 @@
 <?php
 // procesar/db.php
-$host = 'localhost';
-$dbname = 'angelow_db';
-$username = 'root';
-$password = '';
+$host = $_ENV['DB_HOST'] ?? 'localhost';
+$dbname = $_ENV['DB_NAME'] ?? 'angelow_db';
+$username = $_ENV['DB_USER'] ?? 'root';
+$password = $_ENV['DB_PASS'] ?? '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);

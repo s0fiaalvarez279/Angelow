@@ -6,7 +6,7 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 // Configuración de Google (se puede mover a config/app.php si se desea)
-$client_id = '518631585090-vel52de86h7lk3uetco3dc3schnqokh7.apps.googleusercontent.com';
+$client_id = $_ENV['GOOGLE_CLIENT_ID'] ?? '518631585090-vel52de86h7lk3uetco3dc3schnqokh7.apps.googleusercontent.com';
 ?>
 <!DOCTYPE html>
 <html lang="es">
